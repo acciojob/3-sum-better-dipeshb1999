@@ -1,35 +1,35 @@
-//function threeSum(arr, target) {
-// write your code here
-  
-//}
+function findClosestSum() {
+  const inputArray = document.getElementById("inputArray").value;
+  const target = document.getElementById("target").value;
+  const nums = inputArray.split(" ").map(Number);
 
-//module.exports = threeSum;
+  const closestSum = threeSum(nums, target);
+  document.getElementById("result").textContent =
+    "Closest sum: " + closestSum;
+}
+
 function threeSum(nums, target) {
-  nums.sort((a, b) => a - b); // Sort the array in ascending order
-  let closestSum = nums[0] + nums[1] + nums[2]; // Initialize closestSum with the sum of the first three numbers
-  const len = nums.length;
+  nums.sort((a, b) => a - b);
 
-  for (let i = 0; i < len - 2; i++) {
-    let left = i + 1; // Pointer for the element next to nums[i]
-    let right = len - 1; // Pointer for the last element
+  let closestSum = Infinity;
+
+  for (let i = 0; i < nums.length - 2; i++) {
+    let left = i + 1;
+    let right = nums.length - 1;
 
     while (left < right) {
       const sum = nums[i] + nums[left] + nums[right];
 
-      if (sum === target) {
-        return sum; // Found an exact match, return the sum
-      }
-
-      // Update closestSum if the current sum is closer to the target
       if (Math.abs(sum - target) < Math.abs(closestSum - target)) {
         closestSum = sum;
       }
 
-      // Adjust the pointers based on the current sum
       if (sum < target) {
-        left++; // Move the left pointer to increase the sum
+        left++;
+      } else if (sum > target) {
+        right--;
       } else {
-        right--; // Move the right pointer to decrease the sum
+        return closestSum;
       }
     }
   }
